@@ -1,165 +1,253 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <style>
-    body {
-      width: 350px;
-      padding: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    
-    h2 {
-      margin: 0 0 16px 0;
-      font-size: 20px;
-      font-weight: 600;
-    }
-    
-    .context-section {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-bottom: 8px;
-    }
-    
-    .save-btn {
-      background: #10b981;
-      color: white;
-    }
-    
-    .save-btn:hover {
-      background: #059669;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-    }
-    
-    .context-item {
-      background: rgba(255, 255, 255, 0.95);
-      color: #1f2937;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: transform 0.2s;
-    }
-    
-    .context-item:hover {
-      transform: translateX(4px);
-    }
-    
-    .context-info {
-      flex: 1;
-    }
-    
-    .context-name {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    
-    .context-meta {
-      font-size: 12px;
-      color: #6b7280;
-    }
-    
-    .context-actions {
-      display: flex;
-      gap: 8px;
-    }
-    
-    .restore-btn, .delete-btn {
-      padding: 6px 12px;
-      font-size: 12px;
-      width: auto;
-      margin: 0;
-    }
-    
-    .restore-btn {
-      background: #3b82f6;
-      color: white;
-    }
-    
-    .restore-btn:hover {
-      background: #2563eb;
-    }
-    
-    .delete-btn {
-      background: #ef4444;
-      color: white;
-    }
-    
-    .delete-btn:hover {
-      background: #dc2626;
-    }
-    
-    .empty-state {
-      text-align: center;
-      padding: 24px;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-    }
-    
-    input[type="text"] {
-      width: calc(100% - 24px);
-      padding: 10px 12px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-    
-    input[type="text"]::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-    
-    input[type="text"]:focus {
-      outline: none;
-      border-color: rgba(255, 255, 255, 0.6);
-      background: rgba(255, 255, 255, 0.15);
-    }
-    
-    .stats {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-top: 8px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Context Keeper</title>
+    <style>
+        body {
+            width: 380px;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-sizing: border-box;
+        }
+        
+        h2 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .context-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        button {
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .save-btn {
+            width: 100%;
+            padding: 12px;
+            background: #10b981;
+            color: white;
+        }
+        
+        .save-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .context-item {
+            background: rgba(255, 255, 255, 0.98);
+            color: #1f2937;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .context-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .context-info {
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+        
+        .context-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .context-meta {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .header-actions .expand-btn {
+            font-size: 12px;
+            padding: 5px 10px;
+            background-color: #fff;
+            color: #4f46e5;
+            border: 1px solid #e0e7ff;
+        }
+         .header-actions .expand-btn:hover {
+            background-color: #eef2ff;
+         }
+
+        .header-actions .delete-btn {
+            background: none;
+            color: #ef4444;
+            font-size: 20px;
+            line-height: 1;
+            padding: 4px 8px;
+            width: auto;
+        }
+        .header-actions .delete-btn:hover {
+            background: #fee2e2;
+        }
+
+        .collapsible-content {
+            display: none; /* Hidden by default */
+            border-top: 1px solid #e5e7eb;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .collapsible-content.expanded {
+            display: block; /* Shown when expanded */
+        }
+        
+        .tab-list {
+            padding: 5px;
+            max-height: 150px; /* Adjusted height */
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        
+        .tab-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .tab-checkbox {
+            margin-right: 8px;
+            accent-color: #667eea;
+        }
+        .tab-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .actions-container {
+             border-top: 1px solid #e5e7eb;
+             padding-top: 10px;
+        }
+
+        .actions-row {
+            display: flex;
+            gap: 8px;
+        }
+        .actions-row:not(:last-child) {
+            margin-bottom: 8px;
+        }
+
+        .actions-container button {
+             width: auto;
+             flex-grow: 1;
+             padding: 8px 10px;
+             font-size: 12px;
+             background: #f3f4f6;
+             color: #374151;
+        }
+        .actions-container button:hover {
+            background: #e5e7eb;
+        }
+
+        .actions-container .restore-btn, .actions-container .restore-selected-btn {
+            background: #3b82f6;
+            color: white;
+        }
+        .actions-container .restore-btn:hover, .actions-container .restore-selected-btn:hover {
+            background: #2563eb;
+        }
+        
+        .actions-container .select-all-btn {
+            background: #8b5cf6; /* Violet */
+            color: white;
+        }
+        .actions-container .select-all-btn:hover {
+            background: #7c3aed;
+        }
+
+        .actions-container .deselect-all-btn {
+            background: #64748b; /* Slate */
+            color: white;
+        }
+        .actions-container .deselect-all-btn:hover {
+            background: #475569;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .stats {
+            font-size: 12px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
-  <h2>📑 Context Keeper</h2>
-  
-  <div class="context-section">
-    <input type="text" id="contextName" placeholder="Name this context (e.g., 'Research Project')">
-    <button class="save-btn" id="saveContext">💾 Save Current Context</button>
-    <div class="stats" id="currentStats">Loading...</div>
-  </div>
-  
-  <div class="context-section">
-    <h3 style="margin: 0 0 12px 0; font-size: 16px;">Saved Contexts</h3>
-    <div id="contextList"></div>
-  </div>
+    <h2>📑 Context Keeper</h2>
+    
+    <div class="context-section">
+        <input type="text" id="contextName" placeholder="Name this context (e.g., 'Research')">
+        <button class="save-btn" id="saveContext">💾 Save Current Context</button>
+        <div class="stats" id="currentStats">Loading...</div>
+    </div>
+    
+    <div class="context-section">
+        <h3 style="margin: 0 0 12px 0; font-size: 16px; text-align: center;">Saved Contexts</h3>
+        <div id="contextList"></div>
+    </div>
 
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>
+
