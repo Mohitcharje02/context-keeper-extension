@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f5f5f5;
+      text-align: center;
+    }
+    
+    canvas {
+      margin: 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: white;
+    }
+    
+    .instructions {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    button {
+      padding: 12px 24px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    
+    button:hover {
+      background: #5568d3;
+    }
+  </style>
+</head>
+<body>
+  <div class="instructions">
+    <h1>📑 Context Keeper Icon Generator</h1>
+    <p>Right-click each canvas below and "Save image as..." to download:</p>
+    <ul style="text-align: left; display: inline-block;">
+      <li>Save first canvas as: <strong>icon16.png</strong></li>
+      <li>Save second canvas as: <strong>icon48.png</strong></li>
+      <li>Save third canvas as: <strong>icon128.png</strong></li>
+    </ul>
+    <p>Place all three files in an <strong>icons</strong> folder inside your extension directory.</p>
+  </div>
+  
+  <div>
+    <h3>16x16 Icon</h3>
+    <canvas id="icon16" width="16" height="16"></canvas>
+  </div>
+  
+  <div>
+    <h3>48x48 Icon</h3>
+    <canvas id="icon48" width="48" height="48"></canvas>
+  </div>
+  
+  <div>
+    <h3>128x128 Icon</h3>
+    <canvas id="icon128" width="128" height="128"></canvas>
+  </div>
+
+  <script>
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      
+      // Create gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      
+      // Background
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      
+      // Draw document/paper icon
+      const padding = size * 0.2;
+      const paperWidth = size * 0.6;
+      const paperHeight = size * 0.7;
+      const paperX = (size - paperWidth) / 2;
+      const paperY = (size - paperHeight) / 2;
+      
+      // Paper background
+      ctx.fillStyle = 'white';
+      ctx.fillRect(paperX, paperY, paperWidth, paperHeight);
+      
+      // Paper lines (if size allows)
+      if (size >= 48) {
+        ctx.strokeStyle = '#667eea';
+        ctx.lineWidth = size / 32;
+        const lineCount = 4;
+        const lineSpacing = paperHeight / (lineCount + 1);
+        
+        for (let i = 1; i <= lineCount; i++) {
+          const y = paperY + lineSpacing * i;
+          ctx.beginPath();
+          ctx.moveTo(paperX + paperWidth * 0.15, y);
+          ctx.lineTo(paperX + paperWidth * 0.85, y);
+          ctx.stroke();
+        }
+      }
+      
+      // Folded corner
+      const cornerSize = paperWidth * 0.25;
+      ctx.fillStyle = '#e5e7eb';
+      ctx.beginPath();
+      ctx.moveTo(paperX + paperWidth, paperY);
+      ctx.lineTo(paperX + paperWidth, paperY + cornerSize);
+      ctx.lineTo(paperX + paperWidth - cornerSize, paperY);
+      ctx.closePath();
+      ctx.fill();
+      
+      // Add a small bookmark icon
+      if (size >= 48) {
+        const bookmarkW = paperWidth * 0.2;
+        const bookmarkH = paperHeight * 0.3;
+        const bookmarkX = paperX + paperWidth * 0.7;
+        const bookmarkY = paperY - bookmarkH * 0.3;
+        
+        ctx.fillStyle = '#10b981';
+        ctx.fillRect(bookmarkX, bookmarkY, bookmarkW, bookmarkH);
+        
+        // Bookmark triangle cut
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.moveTo(bookmarkX, bookmarkY + bookmarkH);
+        ctx.lineTo(bookmarkX + bookmarkW / 2, bookmarkY + bookmarkH - bookmarkW / 2);
+        ctx.lineTo(bookmarkX + bookmarkW, bookmarkY + bookmarkH);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+    
+    function generateIcons() {
+      drawIcon(document.getElementById('icon16'), 16);
+      drawIcon(document.getElementById('icon48'), 48);
+      drawIcon(document.getElementById('icon128'), 128);
+    }
+    
+    // Generate on load
+    generateIcons();
+  </script>
+</body>
+</html>
