@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 350px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    h2 {
+      margin: 0 0 16px 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    .context-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+    }
+    
+    .save-btn {
+      background: #10b981;
+      color: white;
+    }
+    
+    .save-btn:hover {
+      background: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+    
+    .context-item {
+      background: rgba(255, 255, 255, 0.95);
+      color: #1f2937;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+    
+    .context-item:hover {
+      transform: translateX(4px);
+    }
+    
+    .context-info {
+      flex: 1;
+    }
+    
+    .context-name {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .context-meta {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    
+    .context-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .restore-btn, .delete-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      width: auto;
+      margin: 0;
+    }
+    
+    .restore-btn {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .restore-btn:hover {
+      background: #2563eb;
+    }
+    
+    .delete-btn {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .delete-btn:hover {
+      background: #dc2626;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+    
+    input[type="text"] {
+      width: calc(100% - 24px);
+      padding: 10px 12px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    
+    input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .stats {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>📑 Context Keeper</h2>
+  
+  <div class="context-section">
+    <input type="text" id="contextName" placeholder="Name this context (e.g., 'Research Project')">
+    <button class="save-btn" id="saveContext">💾 Save Current Context</button>
+    <div class="stats" id="currentStats">Loading...</div>
+  </div>
+  
+  <div class="context-section">
+    <h3 style="margin: 0 0 12px 0; font-size: 16px;">Saved Contexts</h3>
+    <div id="contextList"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
